@@ -5,6 +5,8 @@ require("../core framework/router.php");
 //Il faut require les controllers : 
 require("../core framework/controllerFactory.php");
 require("../core framework/viewFactory.php");
+require("../core framework/Model.php");
+
 
 require("../application/Controllers/Posts.php");
 require("../application/Controllers/Home.php");
