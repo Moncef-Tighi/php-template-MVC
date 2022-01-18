@@ -3,10 +3,11 @@
 require("../core framework/router.php");
 
 //Il faut require les controllers : 
-require("../application/Controllers/controllerFactory.php");
+require("../core framework/controllerFactory.php");
+require("../core framework/viewFactory.php");
+
 require("../application/Controllers/Posts.php");
 require("../application/Controllers/Home.php");
-
 
 $url= $_SERVER['QUERY_STRING'];
 

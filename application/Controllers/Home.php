@@ -1,8 +1,12 @@
 <?php
+namespace application\Controllers;
 
-    class Home extends Controller {
-        public function index(){
-            echo "Bienvenue dans l'action index du controller home";
+use \Core\View;
+
+class Home extends \Controller {
+    public function indexAction(){
+            //echo "Bienvenue dans l'action index du controller home";
+            View::render("Home/accueil.php");
         }
     }
 
