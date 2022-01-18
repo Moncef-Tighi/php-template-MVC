@@ -63,6 +63,7 @@ class Router {
         if ($this->match($url)) {
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
+            $controller = $this->getNameSpace() . $controller;
             if (class_exists($controller) ) {
                 $controller_object = new $controller();
                 
@@ -94,6 +95,16 @@ class Router {
         }
 
         return $url;
+    }
+
+
+    protected function getNameSpace() {
+        //cette fonction est utilisé quand on a des dossiers à l'intérieur du controller
+        $namespace= 'application\Controllers\\';
+        if (array_key_exists("namespace", $this->params)) {
+            $namespace .= $this->params["namespace"] . '\\';
+        }
+        return $namespace;
     }
 
     //Getters
