@@ -2,6 +2,9 @@
 
 require("../core framework/router.php");
 
+//Il faut require les controllers : 
+require("../application/Controllers/Posts.php");
+
 $url= $_SERVER['QUERY_STRING'];
 
 $router = new Router();
@@ -14,14 +17,17 @@ $router->add('{controller}/{action}');
 $router->add('admin/{action}/{controller}');
 $router->add('{controller}/{id:\d+}/{action}');
 
-echo('<pre>');
-var_dump($router->getRoutes());
-echo('</pre>');
+// echo('<pre>');
+// var_dump($router->getRoutes());
+// echo('</pre>');
 
 
-if($router->match($url) ) {
-    var_dump($router->getparams());
-} else {
-    echo "The route ` " .$url. " ` dosen't exist";
-}
+// if($router->match($url) ) {
+//     var_dump($router->getparams());
+// } else {
+//     echo "The route ` " .$url. " ` dosen't exist";
+// }
+
+$router->dispatch($url);
+
 ?>

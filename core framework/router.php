@@ -58,6 +58,7 @@ class Router {
     public function dispatch($url) {
         //les liens qu'on reçoit seront dans un format slug : name-last-name
         //Il faut les convertir vers le même format que celui utilisé par les noms de class : NameLastName
+        $url = $this->removeQueryString($url);
 
         if ($this->match($url)) {
             $controller = $this->params['controller'];
@@ -79,6 +80,21 @@ class Router {
             echo 'Aucune route trouvé.';
         }
     } 
+
+    protected function removeQueryString($url) {
+
+        if ($url != '') {
+            $parts = explode('&', $url, 2);
+
+            if (strpos($parts[0], '=')===false) {
+                $url = $parts[0];
+            }  else {
+                $url='';
+            }
+        }
+
+        return $url;
+    }
 
     //Getters
 
