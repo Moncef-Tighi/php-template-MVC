@@ -7,31 +7,34 @@ class Router {
     //Paramètres de la route 
     protected $params = [];
 
-    public function add($route, $controller, $action) {
+    public function add($route, $params=[]) {
         //Conversion de la route vers une regex
         $route = preg_replace('/\//', '\\/', $route);
         
         //Conversion des variablee
-        $route = preg_replace('/\{([a-z]+)\}/', '(?P</1>[a-z-]+)', $route);
+        $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
 
         //Ajout du début et du marqueur pour ignorer la casse
 
         $route= '/^' . $route . '$/i';
-        $this->routes[$route]= ['controller' => $controller, 'action' => $action];
+        $this->routes[$route]= $params;
     }
 
 
     public function match($url) {
         foreach($this->routes as $route=> $params) {
-            if (preg_match("/^(?P<controller>[a-z-]+)\/(?P<action>[a-z-]+)$/", $url, $matches) ) {
-                $params= [];
+
+            //Ancienne regex pour les URL fixe : /^(?P<controller>[a-z-]+)\/(?P<action>[a-z-]+)$/
+
+            if (preg_match($route, $url, $matches) ) {
+                //$params= [];
 
                 foreach($matches as $key=>$match) {
                     if (is_string($key)) {
                         $params[$key]= $match;
                     }
                 }
-                var_dump($params);
+
                 $this->params = $params;
                 return true;
             }

@@ -6,13 +6,15 @@ $url= $_SERVER['QUERY_STRING'];
 
 $router = new Router();
 
-$router->add('', 'Home', 'index');
-$router->add('posts', 'Posts', 'index');
-$router->add('posts/new', 'Posts', 'new');
+$router->add('', ['controller' => 'Home', 'action' => 'index']);
+$router->add('posts', ['controller' => 'Posts', 'action' => 'index']);
+$router->add('posts/new', ['controller' => 'Posts', 'action' => 'new']);
 
-// echo('<pre>');
-// var_dump($router->getRoutes());
-// echo('</ pre>');
+$router->add('{controller}/{action}');
+$router->add('admin/{action}/{controller}');
+echo('<pre>');
+var_dump($router->getRoutes());
+echo('</pre>');
 
 
 if($router->match($url) ) {
