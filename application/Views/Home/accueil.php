@@ -6,6 +6,13 @@
 </head>
 <body>
     <h1>Bienvenue</h1>
-    <p>Fichier chargé dans le view!</p>
+    <p><?php echo htmlspecialchars($name);?></p>
+
+    <ul>
+        <?php foreach($couleurs as $couleur) {
+            echo "<li>".htmlspecialchars($couleur)."</li>";
+        }
+        ?>
+    </ul>
 </body>
 </html>
