@@ -11,11 +11,14 @@ class Router {
         //Conversion de la route vers une regex
         $route = preg_replace('/\//', '\\/', $route);
         
-        //Conversion des variablee
+        //Conversion des paramètres comme {controller}
         $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
 
-        //Ajout du début et du marqueur pour ignorer la casse
+        //Conversion des variables uniques comme {id:\d+}
+        //On ajoute la regex quand on créé la route pour savoir que c'est une variable 
+        $route= preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
 
+        //Ajout du début et du marqueur pour ignorer la casse 
         $route= '/^' . $route . '$/i';
         $this->routes[$route]= $params;
     }
