@@ -45,6 +45,41 @@ class Router {
         return false;
     }
 
+    protected function convertToStudlyCaps($string) {
+        //ça part du principe que les noms de class seront en StudlyCaps.
+        return str_replace(' ','',ucwords(str_replace('-', ' ', $string)));
+    }
+
+    protected function convertToCamelCase($string) {
+        //ça part du principe que les méthodes seront écrites en camelCase.
+        return lcfirst($this->convertToStudlyCaps($string));
+    }
+
+    public function dispatch($url) {
+        //les liens qu'on reçoit seront dans un format slug : name-last-name
+        //Il faut les convertir vers le même format que celui utilisé par les noms de class : NameLastName
+
+        if ($this->match($url)) {
+            $controller = $this->params['controller'];
+            $controller = $this->convertToStudlyCaps($controller);
+            if (class_exists($controller) ) {
+                $controller_object = new $controller();
+                
+                $action = $this->params['action'];
+                $action = $this->convertToCamelCase($action);
+                if (is_callable([$controller_object, $action])) {
+                    $controller_object->$action();
+                } else {
+                    echo "La méthode $action (Dans le controller $controller) n'existe pas.";
+                }
+            } else {
+                echo "La class $controller n'existe pas";
+            }
+        } else {
+            echo 'Aucune route trouvé.';
+        }
+    } 
+
     //Getters
 
     public function getRoutes() {
