@@ -1,0 +1,3 @@
+[submodule "site1_MVC"]
+	path = site1_MVC
+	url = ./site1_MVC/
